@@ -1,10 +1,10 @@
-# Überauth EVE SSO
+# Überauth Goonfleet SSO
 
-EVE SSO OAuth2 strategy for Überauth
+Goonfleet OAuth2 strategy for Überauth
 
 ## Installation
 
-1. Setup your application at the [EVE third party developer page](https://developers.eveonline.com/).
+1. Setup your application following instructions at the [Goonfleet forums](https://developers.eveonline.com/).
 
 2. Add `:ueberauth_eve_sso` to your list of dependencies in `mix.exs`:
 
@@ -18,32 +18,32 @@ EVE SSO OAuth2 strategy for Überauth
 
     ```elixir
     def application do
-      [applications: [:ueberauth_eve_sso]]
+      [applications: [:ueberauth_goonfleet]]
     end
     ```
 
-4. Add EVESSO to your ueberauth configuration:
+4. Add Goonfleet provider to your ueberauth configuration:
 
     ```elixir
     config :ueberauth, Ueberauth,
       providers: [
-        evesso: {Ueberauth.Strategy.EVESSO, []}
+        goonfleet: {Ueberauth.Strategy.Goonfleet, []}
       ]
     ```
 
 5. Update your provider configuration:
 
     ```elixir
-    config :ueberauth, Ueberauth.Strategy.EVESSO.OAuth,
-      client_id: System.get_env("EVESSO_CLIENT_ID"),
-      client_secret: System.get_env("EVESSO_SECRET_KEY")
+    config :ueberauth, Ueberauth.Strategy.Goonfleet.OAuth,
+      client_id: System.get_env("GOONFLEET_CLIENT_ID"),
+      client_secret: System.get_env("GOONFLEET_SECRET_KEY")
     ```
 
     Or, to read the client credentials at runtime:
     ```elixir
-    config :ueberauth, Ueberauth.Strategy.EVESSO.OAuth,
-      client_id: {:system, "EVESSO_CLIENT_ID"},
-      client_secret: {:system, "EVESSO_SECRET_KEY"}
+    config :ueberauth, Ueberauth.Strategy.Goonfleet.OAuth,
+      client_id: {:system, "GOONFLEET_CLIENT_ID"},
+      client_secret: {:system, "GOONFLEET_SECRET_KEY"}
     ```
 
 6. Include the Ueberauth plug in your controller:
@@ -76,11 +76,11 @@ EVE SSO OAuth2 strategy for Überauth
 
 Depending on the configured url you can initiate the request through:
 
-    /auth/evesso
+    /auth/goonfleet
 
 Or with options:
 
-    /auth/evesso?scope=esi-clones.read_implants.v1&state=nonce
+    /auth/goonfleet?scope=openid
 
 By default the requested scope is empty (""). This allows access to all public endpoints and identifies the EVE Character.
 Scope can be configured either explicitly as a `scope` query value on the request path or in your configuration:
@@ -88,12 +88,12 @@ Scope can be configured either explicitly as a `scope` query value on the reques
     ```elixir
     config :ueberauth, Ueberauth,
       providers: [
-        evesso: {Ueberauth.Strategy.EVESSO, [default_scope: "esi-clones.read_implants.v1"]}
+        goonfleet: {Ueberauth.Strategy.Goonfleet, [default_scope: "openid"]}
       ]
 
 The `state` param is required by EVE SSO and should be a nonce generated for each request.
 
 ## License
 
-Please see [LICENSE](https://github.com/lukasni/ueberauth_eve_sso/blob/master/LICENSE) for licensing details.
+Please see [LICENSE](https://github.com/marcinruszkiewicz/ueberauth_goonfleet/blob/master/LICENSE) for licensing details.
 

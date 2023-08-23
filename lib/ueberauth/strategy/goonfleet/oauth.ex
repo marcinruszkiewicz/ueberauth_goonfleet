@@ -1,6 +1,6 @@
 defmodule Ueberauth.Strategy.Goonfleet.OAuth do
   @moduledoc """
-  An implementation of OAuth2 for EVE SSO
+  An implementation of OAuth2 for Goonfleet SSO
 
   To add your `client_id` and `client_secret` include these values in your configuration.
 
@@ -68,6 +68,7 @@ defmodule Ueberauth.Strategy.Goonfleet.OAuth do
     OAuth2.Strategy.AuthCode.authorize_url(client, params)
   end
 
+  # need to remove the extra authorization params or else ESI will complain about multiple credentials
   def get_token(client, params, headers) do
     client
     |> put_param("client_secret", client.client_secret)

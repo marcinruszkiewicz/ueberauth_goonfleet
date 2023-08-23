@@ -97,6 +97,10 @@ defmodule Ueberauth.Strategy.Goonfleet do
 
   @doc """
   Fetches the fields to populate the info section of the `Ueberauth.Auth` struct.
+
+  Name field is the user's forum name.
+  Location field is filled by the user's primary group, which is their corporation group's ID.
+
   """
   def info(conn) do
     user = conn.private.goonfleet_user
